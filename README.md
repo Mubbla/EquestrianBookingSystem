@@ -1,6 +1,12 @@
 # Planeringsmall — Projektskiss
 
-Fyll i denna mall innan ni börjar koda. Skissen är ett första utkast, inte ett facit — det är både normalt och förväntat att klassnamn och struktur ändras när ni väl börjar implementera. Spara den ifyllda mallen som README i er första commit, tillsammans med namn på den/de som jobbar i projektet.
+### Inheritance and Polymorphism
+The project is built around an object-oriented hierarchy where `Horse` acts as the abstract base class.  
+Specific horse types (`DPony`, `CPony`, `LargeHorse`, `PrivateHorse`) extend this class and override behavior where needed.
+
+All horses are stored in a `List<Horse>`, allowing the program to use polymorphism:  
+the system interacts with horses through the base type, while the correct subclass implementation is chosen at runtime.  
+This makes the code flexible, scalable and easy to maintain.
 
 ## Project Idea
 
