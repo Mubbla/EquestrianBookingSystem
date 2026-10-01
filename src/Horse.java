@@ -10,15 +10,25 @@ public class Horse {
         this.isBookable = isBookable;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isBookable() {
+        return isBookable;
+    }
+
     public void setAge(int age) {
         this.age = age;
     }
 
+    public void ShowDetails(){}
 
-
-}
-
-
+}//class
 
 //Name:Horse
 //- Common fields: name, id, isBookable

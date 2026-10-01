@@ -1,2 +1,2 @@
-public class CPony extends Horse{
+public class CPony{
 }

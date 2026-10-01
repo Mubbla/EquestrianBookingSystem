@@ -1,15 +1,20 @@
-# Planeringsmall — Projektskiss
+# Project Planning — Continuously Updated Throughout Development
+
+### Domain Model
+The horses in the system are created programmatically at startup.
+They are not registered by the user, since horse management would unnecessarily expand the scope
+of the application. The user interacts only with bookings, not with the creation or modification
+of horse objects.
 
 ### Inheritance and Polymorphism
-The project is built around an object-oriented hierarchy where `Horse` acts as the abstract base class.  
-Specific horse types (`DPony`, `CPony`, `LargeHorse`, `PrivateHorse`) extend this class and override behavior where needed.
+The project is built around an object-oriented hierarchy where Horse acts as the abstract base class.  
+Specific horse types (DPony, CPony, LargeHorse, PrivateHorse) extend this class and override behavior where needed.
 
-All horses are stored in a `List<Horse>`, allowing the program to use polymorphism:  
+All horses are stored in an ArrayList<Horse>, allowing the program to use polymorphism:  
 the system interacts with horses through the base type, while the correct subclass implementation is chosen at runtime.  
 This makes the code flexible, scalable and easy to maintain.
 
 ## Project Idea
-
 
 A system for managing information about horses and handling bookings at a riding club.
 
@@ -17,15 +22,37 @@ A system for managing information about horses and handling bookings at a riding
 
 - Name:Horse
 - Common fields: name, id, isBookable
-- Common methods: showDetails(), register(), unregister()
+- Common methods: showDetails(), book(), cancelBooking()
 
-## Sub Classes (minst tre)
+## Subclasses and Inheritance
 
-1. Namn — vad gör den annorlunda, vilka metoder overridas?
-1. FullSizeHorse - showDetails() includes age limit
-2. DPony — showDetails includes weight limit
-3. CPony — showDetails includes weight and length limits
-4. PrivateHorse (privately owned) - not Bookable, includes owner
+All horse types in the system inherit from the base class `Horse` using `extends`.
+Each subclass overrides specific behavior to implement its own booking rules and
+display logic. This allows the program to use polymorphism: all horses are handled
+through the base type (`Horse`), while the correct subclass implementation is chosen
+at runtime.
+
+### FullSizeHorse
+- Extends: Horse
+- Overrides: showDetails()
+- Adds: age limit information in the details output
+
+### DPony
+- Extends: Horse
+- Overrides: showDetails()
+- Adds: weight limit information
+
+### CPony
+- Extends: Horse
+- Overrides: showDetails()
+- Adds: both weight and length limits
+
+### PrivateHorse
+- Extends: Horse
+- Overrides: showDetails()
+- Characteristics: privately owned, never Bookable
+- Adds: owner information
+
 
 ## Interface
 
@@ -37,13 +64,11 @@ A system for managing information about horses and handling bookings at a riding
 
 Lista minst fyra åtgärder kopplade till samlingen
 (t.ex. lägga till, ta bort, söka, samt en egen åtgärd som passar er domän).
-1. Register
-2. Unregister
-3. Search
-4. Book
-5. Change Booking
-6. Cancel Booking
-7. Change Owner
+1. Book horse
+2. Cancel Booking
+3. Find horse
+4. List all horses
+
 
 ## Possible Error Cases
 
