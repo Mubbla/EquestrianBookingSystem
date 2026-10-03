@@ -1,19 +1,5 @@
 # Project Planning — Continuously Updated Throughout Development
 
-### Domain Model
-The horses in the system are created programmatically at startup.
-They are not registered by the user, since horse management would unnecessarily expand the scope
-of the application. The user interacts only with bookings, not with the creation or modification
-of horse objects.
-
-### Inheritance and Polymorphism
-The project is built around an object-oriented hierarchy where Horse acts as the abstract base class.  
-Specific horse types (DPony, CPony, LargeHorse, PrivateHorse) extend this class and override behavior where needed.
-
-All horses are stored in an ArrayList<Horse>, allowing the program to use polymorphism:  
-the system interacts with horses through the base type, while the correct subclass implementation is chosen at runtime.  
-This makes the code flexible, scalable and easy to maintain.
-
 ## Project Idea
 
 A system for managing information about horses and handling bookings at a riding club.
@@ -45,7 +31,7 @@ at runtime.
 ### CPony
 - Extends: Horse
 - Overrides: showDetails()
-- Adds: both weight and length limits
+- Adds: (both weight and) length limit
 
 ### PrivateHorse
 - Extends: Horse
@@ -79,6 +65,20 @@ Already booked
 Does not exist
 Incorrect input
 ...
+
+## Domain Model
+The horses in the system are created programmatically at startup.
+They are not registered by the user, since horse management would unnecessarily expand the scope
+of the application. The user interacts only with bookings, not with the creation or modification
+of horse objects.
+
+## Inheritance and Polymorphism
+The project is built around an object-oriented hierarchy where Horse acts as the abstract base class.  
+Specific horse types (DPony, CPony, LargeHorse, PrivateHorse) extend this class and override behavior where needed.
+
+All horses are stored in an ArrayList<Horse>, allowing the program to use polymorphism:  
+the system interacts with horses through the base type, while the correct subclass implementation is chosen at runtime.  
+This makes the code flexible, scalable and easy to maintain.
 
 ## Rationale
 
