@@ -4,7 +4,11 @@
 
 A system for managing information about horses and handling bookings at a riding club.
 
-## Super Class
+## ## Abstract Super Class — Horse
+Horse is abstract because it represents a general concept, not a concrete horse instance.  
+Every horse in the system must belong to a specific subtype, and each subclass must provide
+its own showDetails() implementation.
+This prevents invalid objects from being created and supports polymorphism.
 
 - Name:Horse
 - Common fields: name, id, isBookable
@@ -12,10 +16,10 @@ A system for managing information about horses and handling bookings at a riding
 
 ## Subclasses and Inheritance
 
-All horse types in the system inherit from the base class `Horse` using `extends`.
+All horse types in the system inherit from the base class Horse using extends.
 Each subclass overrides specific behavior to implement its own booking rules and
 display logic. This allows the program to use polymorphism: all horses are handled
-through the base type (`Horse`), while the correct subclass implementation is chosen
+through the base type (Horse), while the correct subclass implementation is chosen
 at runtime.
 
 ### FullSizeHorse

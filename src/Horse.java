@@ -2,12 +2,12 @@ public class Horse {
 
     private String name;
     private int age;
-    private boolean isBookable;
+    private boolean isAvailable;
 
     public Horse(String name, int age, boolean isBookable) {
         this.name = name;
         this.age = age;
-        this.isBookable = isBookable;
+        this.isAvailable = isAvailable;
     }
 
     public String getName() {
@@ -18,8 +18,8 @@ public class Horse {
         return age;
     }
 
-    public boolean isBookable() {
-        return isBookable;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
     public void setAge(int age) {
