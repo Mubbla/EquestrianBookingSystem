@@ -10,11 +10,14 @@ public class FullSizeHorse extends Horse{
         this.ageLimit = ageLimit;
     }
 
+    //behöver jag denna?
     public int getAgeLimit() {
         return ageLimit;
     }
 
-    public void ShowDetails(){
+    // Overrides the base class method to display subclass-specific details
+    @Override
+    public void showDetails(){
 
         System.out.println("Namn: " + this.getName() + "\nÅlder: " + this.getAge()
                 + "\nLedig för bokning: " + this.isBookable() + "\nÅldersgräns för bokning: " + this.ageLimit);

@@ -15,7 +15,7 @@ public class Main {
                 "Bosse;24;true;DPony",
                 "Diabolo;14;true;DPony",
                 "Mr Project;24;false;CPony",
-                "Sigge;23;true;DPony",
+                "Sigge;23;true;FullSize",
                 "Loppan;11;true;DPony",
                 };
         //A predefined list of all horses available for booking
@@ -32,28 +32,25 @@ public class Main {
                     horses.add(new FullSizeHorse(name, age, isBookable, 18));
                     break;
 
-//                case "DPony":
-//                    horses.add(new DPony(name, age, isBookable, 45));
-//                    break;
-//
-//                case "CPony":
-//                    horses.add(new CPony(name, age, isBookable, 45, 120));
-//                    break;
+                case "DPony":
+                    horses.add(new DPony(name, age, isBookable, 45));
+                    break;
+
+                case "CPony":
+                    horses.add(new CPony(name, age, isBookable,  120));
+                    break;
 //
 //                case "Private":
-//                    horses.add(ne
+//                   horses.add(new Private(name, age, isBookable,
 
 
+        } //switch
+
+        }//for
+        for (Horse horse : horses) {
+            // Polymorphism: each subclass provides its own implementation of showDetails()
+            horse.showDetails();
         }
-
-            for (Horse horse : horses) {
-                horse.ShowDetails();
-            }
-
-
-        }
-
-
 
     }//main
 

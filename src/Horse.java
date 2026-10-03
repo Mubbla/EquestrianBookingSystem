@@ -25,8 +25,8 @@ public class Horse {
     public void setAge(int age) {
         this.age = age;
     }
-
-    public void ShowDetails(){}
+    // Base method intended to be overridden by all horse subclasses
+    public void showDetails(){}
 
 }//class
 
