@@ -1,15 +1,18 @@
-public class Horse {
+public abstract class Horse {
 
+    //Common fields for all horses
     private String name;
     private int age;
     private boolean isAvailable;
 
+    //Constructor
     public Horse(String name, int age, boolean isBookable) {
         this.name = name;
         this.age = age;
         this.isAvailable = isAvailable;
     }
 
+    //Getters
     public String getName() {
         return name;
     }
@@ -22,15 +25,19 @@ public class Horse {
         return isAvailable;
     }
 
+    //Setters
     public void setAge(int age) {
         this.age = age;
     }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     // Base method intended to be overridden by all horse subclasses
-    public void showDetails(){}
+    public abstract void showDetails();
 
-}//class
+}
 
-//Name:Horse
-//- Common fields: name, id, isBookable
-//- Common methods: showDetails(), register(), unregister()
+
 

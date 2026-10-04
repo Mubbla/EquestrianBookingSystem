@@ -12,7 +12,7 @@ public class PrivateHorse extends Horse{
     public void showDetails(){
 
         System.out.println("Namn: " + this.getName() + "\nÅlder: " + this.getAge()
-                + "\nLedig för bokning: " + this.isAvailable() + "\nÄgare: " + this.owner);
+                + "\nPrivathäst, går ej att boka. " + "\nÄgare: " + this.owner);
         System.out.println("/**********************************************/\n");
 
     }

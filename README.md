@@ -52,12 +52,12 @@ at runtime.
 
 ## Menu
 
-Lista minst fyra åtgärder kopplade till samlingen
-(t.ex. lägga till, ta bort, söka, samt en egen åtgärd som passar er domän).
-1. Book horse
-2. Cancel Booking
-3. Find horse
-4. List all horses
+1. Lista alla hästar
+2. Lägg till nya häst
+3. Ta bort hästar
+4. Boka hästar
+5. Avboka hästar
+6. Avsluta
 
 
 ## Possible Error Cases
@@ -65,8 +65,9 @@ Lista minst fyra åtgärder kopplade till samlingen
 Minst två konkreta situationer i just ert program som kan gå fel
 och som ni behöver hantera (inte generella exempel).
 
-Already booked
+Already exists
 Does not exist
+Already booked
 Incorrect input
 ...
 
