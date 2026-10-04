@@ -4,7 +4,11 @@
 
 A system for managing information about horses and handling bookings at a riding club.
 
-## Super Class
+## ## Abstract Super Class — Horse
+Horse is abstract because it represents a general concept, not a concrete horse instance.  
+Every horse in the system must belong to a specific subtype, and each subclass must provide
+its own showDetails() implementation.
+This prevents invalid objects from being created and supports polymorphism.
 
 - Name:Horse
 - Common fields: name, id, isBookable
@@ -12,10 +16,10 @@ A system for managing information about horses and handling bookings at a riding
 
 ## Subclasses and Inheritance
 
-All horse types in the system inherit from the base class `Horse` using `extends`.
+All horse types in the system inherit from the base class Horse using extends.
 Each subclass overrides specific behavior to implement its own booking rules and
 display logic. This allows the program to use polymorphism: all horses are handled
-through the base type (`Horse`), while the correct subclass implementation is chosen
+through the base type (Horse), while the correct subclass implementation is chosen
 at runtime.
 
 ### FullSizeHorse
@@ -48,12 +52,12 @@ at runtime.
 
 ## Menu
 
-Lista minst fyra åtgärder kopplade till samlingen
-(t.ex. lägga till, ta bort, söka, samt en egen åtgärd som passar er domän).
-1. Book horse
-2. Cancel Booking
-3. Find horse
-4. List all horses
+1. Lista alla hästar
+2. Lägg till nya häst
+3. Ta bort hästar
+4. Boka hästar
+5. Avboka hästar
+6. Avsluta
 
 
 ## Possible Error Cases
@@ -61,8 +65,9 @@ Lista minst fyra åtgärder kopplade till samlingen
 Minst två konkreta situationer i just ert program som kan gå fel
 och som ni behöver hantera (inte generella exempel).
 
-Already booked
+Already exists
 Does not exist
+Already booked
 Incorrect input
 ...
 
