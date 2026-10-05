@@ -9,7 +9,7 @@ public class HorseManager {
         //Create horse data "Data base"
         Horse horse1 = new Pony("Diabolo", 14, 1.30);
         Horse horse2 = new FullSizeHorse("Blixten", 11, 18);
-        Horse horse3 = new PrivateHorse("Hoppla", 7, "Klara");
+        Horse horse3 = new PrivateHorse("Hoppla", 7, "Klara", true);
 
         //Create a predefined list of all horses available for booking
         ArrayList<Horse> horses = new ArrayList<>();
@@ -163,7 +163,17 @@ public class HorseManager {
                     System.out.println("Fel: Skriv in ett giltigt namn: ");
                     owner = scanner.nextLine();
                 }
-                horse = new PrivateHorse(name, ageInt, owner);
+                System.out.print("Kan ägaren kontaktas? (ja/nej): ");
+                String contactInput = scanner.nextLine().trim().toLowerCase();
+
+                while (!(contactInput.equals("ja") || contactInput.equals("nej"))) {
+                    System.out.println("Fel: Skriv 'ja' eller 'nej'.");
+                    System.out.print("Kan ägaren kontaktas? (ja/nej): ");
+                    contactInput = scanner.nextLine().trim().toLowerCase();
+                }
+
+                boolean isContactable = contactInput.equals("ja");
+                horse = new PrivateHorse(name, ageInt, owner, isContactable);
                 break;
         }
 
