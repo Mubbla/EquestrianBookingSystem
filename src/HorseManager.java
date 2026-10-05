@@ -8,7 +8,7 @@ public class HorseManager {
 
         //Create horse data "Data base"
         Horse horse1 = new Pony("Diabolo", 14, 1.30);
-        Horse horse2 = new FullSizeHorse("Blixten", 11,18);
+        Horse horse2 = new FullSizeHorse("Blixten", 11, 18);
         Horse horse3 = new PrivateHorse("Hoppla", 7, "Klara");
 
         //Create a predefined list of all horses available for booking
@@ -20,7 +20,7 @@ public class HorseManager {
         //Console with menu
         Scanner scanner = new Scanner(System.in);
         int menuChoice = 0;
-        while(menuChoice!= 6) {
+        while (menuChoice != 6) {
             System.out.println("\n=== ADMINISTRERA HÄSTAR ===");
             System.out.println("1. Visa alla");
             System.out.println("2. Lägg till");
@@ -32,24 +32,18 @@ public class HorseManager {
             try {
                 menuChoice = scanner.nextInt();
                 scanner.nextLine();// consume leftover newline from nextInt()
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Fel: Du måste skriva in siffran för alternativet!");
                 scanner.nextLine(); // delete the faulty value
                 menuChoice = 0; // keep the loop running
             }
-            if(menuChoice!=0) {
+            if (menuChoice != 0) {
                 switch (menuChoice) {
                     case 1:
                         listAllHorses(horses);
                         break;
                     case 2:
                         addHorseFromUserInput(horses, scanner);
-                        //Välj typ: 1,2,3
-                        //Type = input
-                        //Mata in övriga data med ; mellan
-                        //Konkatenera
-                        //Skicka till addHorse
                         break;
                     case 3:
                         System.out.println("3");
@@ -67,7 +61,7 @@ public class HorseManager {
                         System.out.println("Felaktigt värde!");
                 }
             }//if
-        }
+        }//while menuChoice
 
     }//main
 
@@ -81,93 +75,107 @@ public class HorseManager {
 
     public static void addHorseFromUserInput(ArrayList<Horse> horses, Scanner scanner) {
         Horse horse = null;
-        try {
-            System.out.print("Namn: ");
-            String name = scanner.nextLine();
-            //Check name only contains letters and spaces, and is not empty
-            while (!name.matches("[A-Za-zÅÄÖåäö ]+")||name.trim().isEmpty()) {
-                System.out.println("Fel: Skriv in ett giltigt namn: ");
-                name = scanner.nextLine();
-            }
 
-            System.out.print("Ålder: ");
-            String age = scanner.nextLine();
-            int ageInt = Integer.parseInt(age);
-            while (ageInt<0) {
+        //Enter name and validate input
+        System.out.print("Namn: ");
+        String name = scanner.nextLine();
+        //Check name only contains letters and spaces, and is not empty
+        while (!name.matches("[A-Za-zÅÄÖåäö ]+") || name.trim().isEmpty()) {
+            System.out.println("Fel: Skriv in ett giltigt namn: ");
+            name = scanner.nextLine();
+        }
+
+        //Enter age and validate input
+        int ageInt = -1;
+        System.out.print("Ålder: ");
+        String age = scanner.nextLine();
+        try {
+            ageInt = Integer.parseInt(age);
+            while (ageInt < 0) {
                 System.out.println("Fel! Skriv in en giltig ålder: ");
                 age = scanner.nextLine();
                 ageInt = Integer.parseInt(age);
             }
-
-            System.out.print("Typ (1=FullSize, 2=Pony, 3=Private): ");
-            int typeChoice = scanner.nextInt();
-            scanner.nextLine();
-            while(typeChoice < 1 || typeChoice > 3){
-                System.out.println("Fel! Välj Typ (1=FullSize, 2=Pony, 3=Private): ");
-                typeChoice = scanner.nextInt();
-                scanner.nextLine();
-            }
-//
-            switch (typeChoice) {
-                case 1:
-                System.out.print("Åldersgräns för ryttaren: ");
-                String ageLimit = scanner.nextLine();
-                int ageLimitInt = Integer.parseInt(ageLimit);
-                while (ageLimitInt<0) {
-                    System.out.println("Fel! Skriv in en giltig åldersgräns: ");
-                    ageLimit = scanner.nextLine();
-                }
-                horse = new FullSizeHorse(name, ageLimitInt, ageLimitInt);
-                break;
-                case 2:
-                    System.out.print("Minsta tillåtna längd för ryttaren: ");
-                    String lengthLimit = scanner.nextLine();
-                    double lengthLimitDouble = Double.parseDouble(lengthLimit);
-                    horse = new Pony(name, ageInt, lengthLimitDouble);
-                    break;
-                case 3:
-                    System.out.print("Ägare: ");
-                    String owner = scanner.nextLine();
-                    horse = new PrivateHorse(name, ageInt, owner);
-                    break;
-            }
+        } catch(NumberFormatException e){
+            System.out.println("Exception: Ålder måste vara ett heltal.");
         }
-        catch (InputMismatchException e) {
-            System.out.println("Fel: Ålder eller typ måste vara en siffra.");
-            scanner.nextLine();
-        } catch (NumberFormatException e) {
-            System.out.println("Fel: Åldersgräns måste vara ett heltal, längd måste vara ett decimaltal.");
+
+        //Enter horse type and validate input
+        int typeChoiceInt = -1;
+
+        System.out.print("Typ (1=FullSize, 2=Pony, 3=Private): ");
+        String typeChoice = scanner.nextLine();
+        try {
+            typeChoiceInt = Integer.parseInt(typeChoice);
+            while (typeChoiceInt < 1 || typeChoiceInt > 3) {
+                System.out.println("Fel! Välj Typ (1=FullSize, 2=Pony, 3=Private): ");
+                typeChoice = scanner.nextLine();
+                typeChoiceInt = Integer.parseInt(typeChoice);
+            }
+        } catch (InputMismatchException e){
+            System.out.println("Fel! Exception! på TYP");
+        }
+
+        switch (typeChoiceInt) {
+            case 1:
+                //Enter age limit and validate input
+                int ageLimitInt = -1;
+                while (ageLimitInt < 0) {
+                    try {
+                        System.out.print("Åldersgräns för ryttaren: ");
+                        ageLimitInt = Integer.parseInt(scanner.nextLine());
+
+                        if (ageLimitInt < 0) {
+                            System.out.println("Fel: Åldersgräns måste vara 0 eller högre.");
+                            ageLimitInt = -1; // Reset to continue loop
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Fel: Åldersgräns måste vara ett heltal.");
+                        ageLimitInt = -1; // Reset to continue loop
+                    }
+                }
+                horse = new FullSizeHorse(name, ageInt, ageLimitInt);
+                break;
+            case 2:
+                //Enter length limit and validate input
+                double lengthLimitDouble = -1;
+                while (lengthLimitDouble < 0) {
+                    try {
+                        System.out.print("Minsta tillåtna längd för ryttaren: ");
+                        lengthLimitDouble = Double.parseDouble(scanner.nextLine());
+
+                        if (lengthLimitDouble < 0) {
+                            System.out.println("Fel: Längd måste vara 0 eller högre.");
+                            lengthLimitDouble = -1;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Fel: Längd måste vara ett decimaltal.");
+                        lengthLimitDouble = -1;
+                    }
+                }
+                horse = new Pony(name, ageInt, lengthLimitDouble);
+                break;
+            case 3:
+                System.out.print("Ägare: ");
+                String owner = scanner.nextLine();
+                //Check owner name only contains letters and spaces, and is not empty
+                while (!owner.matches("[A-Za-zÅÄÖåäö ]+") || owner.trim().isEmpty()) {
+                    System.out.println("Fel: Skriv in ett giltigt namn: ");
+                    owner = scanner.nextLine();
+                }
+                horse = new PrivateHorse(name, ageInt, owner);
+                break;
         }
 
         if (horse != null) {
             horses.add(horse);
             System.out.println("Hästen har registrerats!");
         }
-    }
+        else{
+            System.out.println("Registreringen misslyckades. Försök igen!");
+        }
+    }//addHorse
 
-//    public static void addHorseToList( ArrayList<Horse> horses, String horseData){
-//
-//        int privateIndex = 0; // tracks the next owner in the privateOwners listfor (String row : horseData) {
-//        String[] parts = horseData.split(";");
-//
-//        String name = parts[0];
-//        int age = Integer.parseInt(parts[1]);
-//        String type = parts[3];
-//        switch (type) {
-//            case "FullSize":
-//                horses.add(new FullSizeHorse(name, age, true, parts[2]));
-//                break;
-//            case "Pony":
-//                horses.add(new Pony(name, age, true, parts[2]));
-//                break;
-//            case "Private":
-//                horses.add(new PrivateHorse(name, age, false, parts[2]));
-//                break;
-//            default:
-//                System.out.println("Unknown type " + type + " entered.");
-//                System.out.println("/**********************************************/\n");
-//            }
-//        }
-}
+}//class
 
 
