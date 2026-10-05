@@ -2,9 +2,9 @@ public class FullSizeHorse extends Horse{
 
     int ageLimit;
 
-    public FullSizeHorse(String name, int age, boolean isAvailable, int ageLimit) {
+    public FullSizeHorse(String name, int age, int ageLimit) {
         // Call the superclass constructor to initialize shared Horse fields
-        super(name, age, isAvailable);
+        super(name, age, true);
 
         // Initialize subclass-specific field
         this.ageLimit = ageLimit;
@@ -19,9 +19,11 @@ public class FullSizeHorse extends Horse{
     @Override
     public void showDetails(){
 
-        System.out.println("Namn: " + this.getName() + "\nÅlder: " + this.getAge()
-                + "\nLedig för bokning: " + this.isAvailable() + "\nÅldersgräns för bokning: " + this.ageLimit);
+        System.out.println();
         System.out.println("/**********************************************/\n");
+        System.out.println("Namn: " + this.getName() + "\nÅlder: " + this.getAge()
+                + "\nLedig för bokning: " + this.isAvailable()
+                + "\nÅldersgräns för bokning: " + this.ageLimit);
 
     }
 }

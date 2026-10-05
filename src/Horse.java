@@ -6,7 +6,7 @@ public abstract class Horse {
     private boolean isAvailable;
 
     //Constructor
-    public Horse(String name, int age, boolean isBookable) {
+    public Horse(String name, int age, boolean isAvailable) {
         this.name = name;
         this.age = age;
         this.isAvailable = isAvailable;

@@ -2,14 +2,14 @@ public class Pony extends Horse
 {
     double lengthLimit;
 
-    public Pony(String name, int age, boolean isAvailable, int lengthLimit) {
+    public Pony(String name, int age, double lengthLimit) {
         // Call the superclass constructor to initialize shared Horse fields
-        super(name, age, isAvailable);
+        super(name, age, true);
         // Initialize subclass-specific field
         this.lengthLimit = lengthLimit;
     }
 
-    public double getWeightLimit() {
+    public double getlengthLimit() {
         return lengthLimit;
     }
 
@@ -17,10 +17,11 @@ public class Pony extends Horse
     @Override
     public void showDetails(){
 
+        System.out.println();
+        System.out.println("/**********************************************/\n");
         System.out.println("Namn: " + this.getName() + "\nÅlder: " + this.getAge()
                 + "\nLedig för bokning: " + this.isAvailable() + "\nRyttaren måste vara minst: "
                 + this.lengthLimit + " m");
-        System.out.println("/**********************************************/\n");
 
     }
 }
