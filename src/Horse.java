@@ -37,6 +37,9 @@ public abstract class Horse {
     // Base method intended to be overridden by all horse subclasses
     public abstract void showDetails();
 
+    // Base method intended to be overridden by all horse subclasses
+    public abstract boolean isAvailableFor(int riderAge, double riderHeigh);
+
 }
 
 

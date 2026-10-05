@@ -1,4 +1,4 @@
 public interface Bookable {
-    boolean book();           // true = bokning lyckades, false = misslyckades
-    boolean cancelBooking();  // true = avbokning lyckades, false = misslyckades
+    boolean book(int riderAge, double riderHeight); // true = booking succeeded, false = booking failed
+    boolean cancelBooking();  // true = cancellation succeeded , false = cancellation failed
 }
