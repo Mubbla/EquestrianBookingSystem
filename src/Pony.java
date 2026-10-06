@@ -1,4 +1,4 @@
-public class Pony extends Horse
+public class Pony extends Horse implements Bookable
 {
     double minRiderLength;
 
@@ -28,5 +28,24 @@ public class Pony extends Horse
     @Override
     public boolean isAvailableFor(int riderAge, double riderHeight) {
         return riderHeight >= this.minRiderLength;
+    }
+
+    public boolean book(String riderLength){
+
+        double riderLengthDouble = Double.parseDouble(riderLength);
+        if(riderLengthDouble>=minRiderLength)
+            this.setAvailable(false); //If booking succeeded - pony no longer available
+
+        return riderLengthDouble>=minRiderLength; //true = booked, false = failed booking
+
+    }
+
+    public boolean cancelBooking(){
+
+        if(!this.isAvailable())
+            this.setAvailable(true); //If cancelling succeeded, pony is available
+
+        return this.isAvailable(); //true = cancelled, false = failed cancelling (already available)
+
     }
 }
