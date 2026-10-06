@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Horse {
 
     //Common fields for all horses
@@ -37,8 +39,11 @@ public abstract class Horse {
     // Base method intended to be overridden by all horse subclasses
     public abstract void showDetails();
 
+    //public abstract boolean hasRequirement();
+
+
     // Base method intended to be overridden by all horse subclasses
-    public abstract boolean isAvailableFor(int riderAge, double riderHeigh);
+    public abstract boolean isAvailableFor(int riderAge, double riderHeight);
 
 }
 
