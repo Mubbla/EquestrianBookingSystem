@@ -42,10 +42,13 @@ public class Pony extends Horse implements Bookable
 
     public boolean cancelBooking(){
 
-        if(!this.isAvailable())
-            this.setAvailable(true); //If cancelling succeeded, pony is available
+        boolean canceled = false;
+        if(!this.isAvailable()) {
+            this.setAvailable(true); //If cancelling succeeded, horse is available
+            canceled = true;
+        }
 
-        return this.isAvailable(); //true = cancelled, false = failed cancelling (already available)
+        return canceled; //true = canceled, false = failed cancelling (already available)
 
     }
 }
