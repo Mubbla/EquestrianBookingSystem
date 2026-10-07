@@ -2,16 +2,15 @@ public class FullSizeHorse extends Horse implements Bookable{
 
     int minRiderAge;
 
-    public FullSizeHorse(String name, int age, int ageLimit) {
+    public FullSizeHorse(String name, int age, int minRiderAge) {
         // Call the superclass constructor to initialize shared Horse fields
         super(name, age, true);
 
         // Initialize subclass-specific field
-        this.minRiderAge = ageLimit;
-    }
+        this.minRiderAge = minRiderAge;    }
 
-    //behöver jag denna?
-    public int getAgeLimit() {
+
+    public Integer getMinRiderAge() {
         return minRiderAge;
     }
 
@@ -45,10 +44,13 @@ public class FullSizeHorse extends Horse implements Bookable{
 
     public boolean cancelBooking(){
 
-        if(!this.isAvailable())
-            this.setAvailable(true); //If cancelling succeeded, pony is available
+        boolean canceled = false;
+        if(!this.isAvailable()) {
+            this.setAvailable(true); //If cancelling succeeded, horse is available
+            canceled = true;
+        }
 
-        return this.isAvailable(); //true = canceled, false = failed cancelling (already available)
+        return canceled; //true = canceled, false = failed cancelling (already available)
 
     }
 }
