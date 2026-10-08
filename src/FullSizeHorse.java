@@ -19,7 +19,7 @@ public class FullSizeHorse extends Horse implements Bookable{
     // Overrides the base class methods to display subclass-specific details
     @Override
     public String getType(){
-        return " stor häst ";
+        return "stor häst";
     }
     @Override
     public String showDetails(){
