@@ -1,6 +1,6 @@
 public class Pony extends Horse implements Bookable
 {
-    double minRiderLength;
+    private double minRiderLength;
 
     public Pony(String name, int age, double lengthLimit) {
         // Call the superclass constructor to initialize shared Horse fields
@@ -9,27 +9,44 @@ public class Pony extends Horse implements Bookable
         this.minRiderLength = lengthLimit;
     }
 
-    public double getlengthLimit() {
+    public double getMinRiderLength() {
         return minRiderLength;
     }
 
     // Overrides the base class methods to display subclass-specific details
     @Override
-    public void showDetails(){
+    public String getType(){
+        return " ponny ";
+    }
 
-        System.out.println();
-        System.out.println("/**********************************************/\n");
-        System.out.println("Namn: " + this.getName() + " (Ponny)" + "\nÅlder: " + this.getAge()
-                + "\nLedig för bokning: " + this.isAvailable() + "\nRyttaren måste vara minst: "
-                + this.minRiderLength + " m");
+    @Override
+    public String showDetails(){
+
+        return "\n/**********************************************/\n" +
+                "Namn: " + getName() + " (Ponny)\n" +
+                "Ålder: " + getAge() + "\n" +
+                "Ledig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+                "Ryttaren måste vara minst: " + getMinRiderLength() + " m\n" +
+                "/**********************************************/";
 
     }
+
+    @Override
+    public String getBookingRequirement(){
+        return getName() + " är en " + getType() +
+                " och du måste vara minst " + getMinRiderLength() +
+                " m för att boka.";
+    }
+
     // Checks if rider is tall enough to ride the pony
     @Override
-    public boolean isAvailableFor(int riderAge, double riderHeight) {
-        return riderHeight >= this.minRiderLength;
+    public boolean isAvailableFor(String requirement) {
+
+        return Integer.parseInt(requirement) >= this.minRiderLength;
     }
 
+    //Interface implementation of book and cancelBooking
+    @Override
     public boolean book(String riderLength){
 
         double riderLengthDouble = Double.parseDouble(riderLength);
@@ -39,7 +56,7 @@ public class Pony extends Horse implements Bookable
         return riderLengthDouble>=minRiderLength; //true = booked, false = failed booking
 
     }
-
+    @Override
     public boolean cancelBooking(){
 
         boolean canceled = false;

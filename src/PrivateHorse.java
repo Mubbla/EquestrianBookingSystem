@@ -1,6 +1,6 @@
 public class PrivateHorse extends Horse{
-    String owner;
-    boolean isContactable;
+    private String owner;
+    private boolean isContactable;
 
     public PrivateHorse(String name, int age, String owner, boolean isContactable) {
         // Call the superclass constructor to initialize shared Horse fields
@@ -10,20 +10,52 @@ public class PrivateHorse extends Horse{
         this.isContactable = isContactable;
     }
 
+    //Getters
+    public String getOwner() {
+        return owner;
+    }
+
+    public boolean isContactable() {
+        return isContactable;
+    }
+
+    //Setters
+    public void setContactable(boolean contactable) {
+        isContactable = contactable;
+    }
+
     // Overrides the base class methods to display subclass-specific details
     @Override
-    public void showDetails(){
-
-        System.out.println();
-        System.out.println("/**********************************************/\n");
-        System.out.println("Namn: " + this.getName() + "\nÅlder: " + this.getAge()
-                + "\nPrivat. " + "\nÄgare: " + this.owner
-                + "\nKan kontaktas; " + this.isContactable);
-
+    public String getType(){
+        return "privat häst";
     }
+
+    @Override
+    public String showDetails(){
+
+        return "\n/**********************************************/\n" +
+                "Namn: " + getName() + "\n" +
+                "Ålder: " + getAge() + "\n" +
+                "Privat häst\n" +
+                "Ägare: " + getOwner() + "\n" +
+                "Kan kontaktas: " + (isContactable ? "Ja" : "Nej") + "\n" +
+                "/**********************************************/";
+    }
+
+    @Override
+    public String getBookingRequirement(){
+        if(this.isContactable)
+            return getName() + " är en " + getType() +
+                " och kan inte bokas via systemet. Kontakta " + getOwner() +
+                " för att boka.";
+        else
+            return getName() + " är en " + getType() +
+                    " och kan inte bokas via systemet.";
+    }
+
     // Checks if the horse is available via owner contact
     @Override
-    public boolean isAvailableFor(int riderAge, double riderHeight) {
+    public boolean isAvailableFor(String requirement) {
         return this.isContactable;
     }
 }

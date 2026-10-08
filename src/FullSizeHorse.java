@@ -1,6 +1,8 @@
+import javax.print.attribute.standard.MediaSize;
+
 public class FullSizeHorse extends Horse implements Bookable{
 
-    int minRiderAge;
+    private int minRiderAge;
 
     public FullSizeHorse(String name, int age, int minRiderAge) {
         // Call the superclass constructor to initialize shared Horse fields
@@ -16,32 +18,44 @@ public class FullSizeHorse extends Horse implements Bookable{
 
     // Overrides the base class methods to display subclass-specific details
     @Override
-    public void showDetails(){
+    public String getType(){
+        return " stor häst ";
+    }
+    @Override
+    public String showDetails(){
 
-        System.out.println();
-        System.out.println("/**********************************************/\n");
-        System.out.println("Namn: " + this.getName() + " (Stor häst)" + "\nÅlder: " + this.getAge()
-                + "\nLedig för bokning: " + this.isAvailable()
-                + "\nÅldersgräns för bokning: " + this.minRiderAge);
+        return "\n/**********************************************/\n" +
+                "Namn: " + getName() + " (" + getType() + ")\n" +
+                "Ålder: " + getAge() + "\n" +
+                "Ledig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+                "/**********************************************/";
 
     }
 
+    @Override
+    public String getBookingRequirement(){
+        return getName() + " är en " + getType() +
+                " och du måste vara minst " + getMinRiderAge() +
+                " år för att boka.";
+    }
     // Checks if rider is old enough to ride the horse
     @Override
-    public boolean isAvailableFor(int riderAge, double riderHeight) {
-        return riderAge >= this.minRiderAge;
+    public boolean isAvailableFor(String requirement) {
+        return Integer.parseInt(requirement) >= this.getMinRiderAge();
     }
 
+    //Interface implementation of book and cancelBooking
+    @Override
     public boolean book(String riderAge){
 
         int riderAgeInt = Integer.parseInt(riderAge);
-        if(riderAgeInt>=minRiderAge)
+        if(riderAgeInt>= this.getMinRiderAge())
             this.setAvailable(false); //If booking succeeded - pony no longer available
 
-        return riderAgeInt>=minRiderAge; //true = booked, false = failed booking
+        return riderAgeInt>=this.getMinRiderAge(); //true = booked, false = failed booking
 
     }
-
+    @Override
     public boolean cancelBooking(){
 
         boolean canceled = false;

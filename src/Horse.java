@@ -37,13 +37,16 @@ public abstract class Horse {
     }
 
     // Base method intended to be overridden by all horse subclasses
-    public abstract void showDetails();
+    public abstract String showDetails();
 
-    //public abstract boolean hasRequirement();
+    public abstract String getType();
+
+    // Base method intended to be overridden by all horse subclasses
+    public abstract String getBookingRequirement();
 
 
     // Base method intended to be overridden by all horse subclasses
-    public abstract boolean isAvailableFor(int riderAge, double riderHeight);
+    public abstract boolean isAvailableFor(String requirement);
 
 }
 
