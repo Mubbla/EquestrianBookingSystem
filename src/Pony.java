@@ -16,7 +16,7 @@ public class Pony extends Horse implements Bookable
     // Overrides the base class methods to display subclass-specific details
     @Override
     public String getType(){
-        return " ponny ";
+        return "ponny";
     }
 
     @Override
