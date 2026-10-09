@@ -44,10 +44,6 @@ public abstract class Horse {
     // Base method intended to be overridden by all horse subclasses
     public abstract String getBookingRequirement();
 
-
-    // Base method intended to be overridden by all horse subclasses
-    public abstract boolean isAvailableFor(String requirement);
-
 }
 
 
