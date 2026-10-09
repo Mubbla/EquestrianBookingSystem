@@ -24,10 +24,11 @@ public class FullSizeHorse extends Horse implements Bookable{
     @Override
     public String showDetails(){
 
-        return "\n/**********************************************/\n" +
-                "Namn: " + getName() + " (" + getType() + ")\n" +
+        return  "Namn: " + getName() +  "\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Ledig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+                "Typ: " + getType() +"\n" +
+                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+
                 "/**********************************************/";
 
     }
@@ -37,11 +38,6 @@ public class FullSizeHorse extends Horse implements Bookable{
         return getName() + " är en " + getType() +
                 " och du måste vara minst " + getMinRiderAge() +
                 " år för att boka.";
-    }
-    // Checks if rider is old enough to ride the horse
-    @Override
-    public boolean isAvailableFor(String requirement) {
-        return Integer.parseInt(requirement) >= this.getMinRiderAge();
     }
 
     //Interface implementation of book and cancelBooking

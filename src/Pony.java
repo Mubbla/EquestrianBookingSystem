@@ -22,12 +22,12 @@ public class Pony extends Horse implements Bookable
     @Override
     public String showDetails(){
 
-        return "\n/**********************************************/\n" +
-                "Namn: " + getName() + " (Ponny)\n" +
+        return  "Namn: " + getName() + "\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Ledig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
-                "Ryttaren måste vara minst: " + getMinRiderLength() + " m\n" +
-                "/**********************************************/";
+                "Typ: " + getType() +"\n" +
+                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+
+                "/**********************************************/\n";
 
     }
 
@@ -36,13 +36,6 @@ public class Pony extends Horse implements Bookable
         return getName() + " är en " + getType() +
                 " och du måste vara minst " + getMinRiderLength() +
                 " m för att boka.";
-    }
-
-    // Checks if rider is tall enough to ride the pony
-    @Override
-    public boolean isAvailableFor(String requirement) {
-
-        return Integer.parseInt(requirement) >= this.minRiderLength;
     }
 
     //Interface implementation of book and cancelBooking

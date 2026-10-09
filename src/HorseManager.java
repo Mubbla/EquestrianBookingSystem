@@ -5,13 +5,15 @@ import java.util.Scanner;
 public class HorseManager {
 
     public static void main(String[] args) {
+        //Creates a bookingEngine that handles booking logic
+        BookingHandling bookingEngine = new BookingHandling();
 
-        //Create horse data "Data base"
+        //Creates horse data "Data base"
         Horse horse1 = new Pony("Diabolo", 14, 1.30);
         Horse horse2 = new FullSizeHorse("Blixten", 11, 18);
         Horse horse3 = new PrivateHorse("Hoppla", 7, "Nisse", true);
 
-        //Create a predefined list of all horses available for booking
+        //Creates a predefined list of all horses available for booking
         ArrayList<Horse> horses = new ArrayList<>();
         horses.add(horse1);
         horses.add(horse2);
@@ -53,7 +55,7 @@ public class HorseManager {
                         deleteHorse(horses, scanner);
                         break;
                     case 5:
-                        bookHorse(scanner, horses);
+                        bookHorse(scanner, horses, bookingEngine);
                         break;
                     case 6:
                         cancelBooking(scanner, horses);
@@ -74,6 +76,7 @@ public class HorseManager {
 
     public static void listAllHorses(ArrayList<Horse> horses) {
 
+        System.out.println("\n/**********************************************/\n");
         for (Horse horse : horses) {
             System.out.println(horse.showDetails());
         }
@@ -92,39 +95,61 @@ public class HorseManager {
 
         Horse horse = null;
         while(true) {
-            String horseName = enterAndValidateName(scanner);
-            int age = enterAndValidateAgeInput(scanner);
-            int typeChoiceInt = enterAndValidateHorseType(scanner);
+//            String horseName = enterAndValidateName(scanner);
+//            int age = enterAndValidateAgeInput(scanner);
+//            int typeChoiceInt = enterAndValidateHorseType(scanner);
+            System.out.println("== Hästinfo ==");
+            String horseName = enterAndValidateInput(scanner, "Namn:", "name");
+            int age = Integer.parseInt(enterAndValidateInput(scanner, "Ålder:", "age"));
+            int typeChoiceInt = Integer.parseInt(enterAndValidateInput(scanner,
+                    "Typ (1=Stor häst, 2=Ponny, 3=Privat):", "horsetype"));
+
 
             switch (typeChoiceInt) {
                 case 1:
-                    System.out.print("Ange lägsta tillåtna ålder för ryttaren\n");
-                    int ageLimitInt = enterAndValidateAgeInput(scanner);
+                    System.out.println("== Ryttarinfo ==");
+                    int ageLimitInt = Integer.parseInt(
+                            enterAndValidateInput(scanner, "Ange lägsta tillåtna ålder för ryttaren:", "age")
+                    );
+
                     horse = new FullSizeHorse(horseName, age, ageLimitInt);
                     break;
                 case 2:
-                    System.out.print("Ange minsta tillåtna längd för ryttaren\n");
-                    double minRiderLength = enterAndValidateLengthInput(scanner);//
+                    System.out.println("== Ryttarinfo ==");
+                    double minRiderLength = Double.parseDouble(
+                            enterAndValidateInput(scanner, "Ange minsta tillåtna längd för ryttaren:", "length")
+                    );
+
                     horse = new Pony(horseName, age, minRiderLength);
                     break;
+
                 case 3:
-                    System.out.println(" == Ägarinfo == ");
-                    String owner = enterAndValidateName(scanner);//
-                    String contactInput;
+                    System.out.println("== Ägarinfo ==");
+
+                    String owner = enterAndValidateInput(scanner, "Ägarens namn:", "name");
+
+                    boolean contactable;
 
                     while (true) {
                         System.out.print("Kan ägaren kontaktas? (ja/nej): ");
-                        contactInput = scanner.nextLine().trim().toLowerCase();
+                        String input = scanner.nextLine().trim().toLowerCase();
 
-                        if (contactInput.equals("ja") || contactInput.equals("nej")) {
+                        if (input.equals("ja")) {
+                            contactable = true;
                             break;
                         }
+
+                        if (input.equals("nej")) {
+                            contactable = false;
+                            break;
+                        }
+
                         System.out.println("Fel: Skriv 'ja' eller 'nej'.");
                     }
 
-                    boolean isContactable = contactInput.equals("ja");
-                    horse = new PrivateHorse(horseName, age, owner, isContactable);
+                    horse = new PrivateHorse(horseName, age, owner, contactable);
                     break;
+
             }
 
             if (horse != null) {
@@ -148,7 +173,8 @@ public class HorseManager {
 
     public static void deleteHorse(ArrayList<Horse> horses, Scanner scanner) {
 
-        String horseName = enterAndValidateName(scanner);
+        String horseName = enterAndValidateInput(scanner,"Namn: ", "name");
+                //enterAndValidateName(scanner);
 
         Horse found = findHorse(horseName, horses);
 
@@ -161,66 +187,61 @@ public class HorseManager {
 
     }//deleteHorse
 
-    public static void bookHorse(Scanner scanner, ArrayList<Horse> horses) {
+    public static void bookHorse(Scanner scanner, ArrayList<Horse> horses, BookingHandling bookingEngine) {
 
         Horse horse = null;
         String horseName;
-        String riderLength;
         boolean booked = false;
 
         //Continues until user ends booking
         while(true) {
-            int typeChoice = enterAndValidateHorseType(scanner);
+            int typeChoice = Integer.parseInt(
+                    enterAndValidateInput(scanner, "Typ (1=Stor häst, 2=Ponny, 3=Privat):", "horsetype"));
 
             switch (typeChoice) {
 
-                case 1:
+                case 1: // FullSizeHorse
                     System.out.println("== Ryttarinfo ==");
-                    int riderAgeInt = enterAndValidateAgeInput(scanner);
+                    int riderAgeInt = Integer.parseInt(
+                            enterAndValidateInput(scanner, "Ålder:", "age")
+                    );
+
                     System.out.println("== Hästinfo ==");
-                    horseName = enterAndValidateName(scanner);
+                    horseName = enterAndValidateInput(scanner, "Hästens namn:", "name");
                     horse = findHorse(horseName, horses);
 
-                    if (horse instanceof FullSizeHorse) {
-                        if (horse.isAvailable())
-                            booked = ((FullSizeHorse) horse).book(Integer.toString(riderAgeInt));
-                        else
-                            System.out.println( horse.getName() + "är tyvärr redan bokad!");
-                        if (booked)
-                            System.out.println("Bokningen lyckades!");
-                        else {
-                            System.out.println("Bokningen misslyckades.");
-                            System.out.println(horse.getBookingRequirement());
-                        }
-                    } else
+                    if (horse != null) {
+                        booked = bookingEngine.tryBooking(horse, Integer.toString(riderAgeInt));
+                    } else {
                         System.out.println("Det finns ingen häst med det namnet i systemet!");
+                    }
                     break;
-                case 2:
+
+
+                case 2: // Pony
                     System.out.println("== Ryttarinfo ==");
-                    double riderLengthDouble = enterAndValidateLengthInput(scanner);
+                    double riderLengthDouble = Double.parseDouble(
+                            enterAndValidateInput(scanner, "Längd (meter):", "length")
+                    );
+
                     System.out.println("== Hästinfo ==");
-                    horseName = enterAndValidateName(scanner);
+                    horseName = enterAndValidateInput(scanner, "Hästens namn:", "name");
                     horse = findHorse(horseName, horses);
 
                     if (horse instanceof Pony) {
-                        if (horse.isAvailable())
-                            booked = ((Pony) horse).book(Double.toString(riderLengthDouble));
-                        else
-                           System.out.println( horse.getName() + "är tyvärr redan bokad!");
-                        if (booked)
-                            System.out.println("Bokningen lyckades!");
-                        else {
-                            System.out.println("Bokningen misslyckades.");
-                            System.out.println(horse.getBookingRequirement());
-                        }
-                    } else if(horse != null)
-                        System.out.println(horseName +" är en " + horse.getType() + "Gör om ditt val!");
+                        booked = bookingEngine.tryBooking(horse, Double.toString(riderLengthDouble));
+                    } else if (horse != null) {
+                        System.out.println(horseName + " är en " + horse.getType() + ". Gör om ditt val!");
+                    } else {
+                        System.out.println("Det finns ingen häst med det namnet i systemet!");
+                    }
                     break;
-                case 3:
-                    System.out.println("Privata hästar kan inte bokas via systemet. ");
-                    break;
-            }//switch
 
+
+                case 3: // PrivateHorse
+                    System.out.println("Privata hästar kan inte bokas via systemet.");
+                    break;
+            }
             while (true) {
                 System.out.print("Vill du fortsätta boka? (ja/nej): ");
                 String yesNo = scanner.nextLine().trim().toLowerCase();
@@ -236,104 +257,91 @@ public class HorseManager {
     public static void cancelBooking(Scanner scanner, ArrayList<Horse> horses){
 
         System.out.println("== Hästinfo ==");
-        String horseName = enterAndValidateName(scanner);
+        String horseName = enterAndValidateInput(scanner, "Hästens namn:", "name");
         boolean canceled = false;
 
-        for(Horse horse: horses){
-            if(horse.getName().equals(horseName)){
-                if(horse instanceof FullSizeHorse)
-                    canceled= ((FullSizeHorse)horse).cancelBooking();
-                if(horse instanceof Pony)
-                    canceled= ((Pony)horse).cancelBooking();
-                if(horse instanceof PrivateHorse)
+        for (Horse horse : horses) {
+
+            if (horse.getName().equalsIgnoreCase(horseName)) {
+
+                if (horse instanceof FullSizeHorse)
+                    canceled = ((FullSizeHorse) horse).cancelBooking();
+
+                else if (horse instanceof Pony)
+                    canceled = ((Pony) horse).cancelBooking();
+
+                else if (horse instanceof PrivateHorse)
                     System.out.println("Privatägd häst: Kontakta ägaren om du vill avboka!");
             }
         }
-        if(canceled)
+
+        if (canceled)
             System.out.println("Avbokningen lyckades!");
         else
             System.out.println("Du försöker avboka en häst som inte är bokad!");
 
     }//cancelBooking
 
-    public static int enterAndValidateHorseType(Scanner scanner){
+    public static String enterAndValidateInput(Scanner scanner, String prompt, String type) {
 
-        //Enter horse type and validate input
-        int typeChoiceInt = -1;
-        boolean validInput = false;
+        while (true) {
+            System.out.print(prompt + " ");
+            String input = scanner.nextLine().trim();
 
-        while (!validInput) {
-            System.out.print("Typ (1=Stor häst, 2=Ponny, 3=Privat): ");
-            String typeChoice = scanner.nextLine();
-            try {
-                typeChoiceInt = Integer.parseInt(typeChoice);
-                if (typeChoiceInt >= 1 && typeChoiceInt <= 3) {
-                    validInput = true;
-                } else {
-                    System.out.println("Fel! Välj mellan 1-3.");
+            // name
+            if (type.equals("name")) {
+                if (input.matches("[A-Za-zÅÄÖåäö ]+") && !input.trim().isEmpty()) {
+                    return input;
                 }
+                System.out.println("Fel: Skriv in ett giltigt namn (endast bokstäver och mellanslag).");
+                continue;
+            }
+
+            // numbers (age, length, horsetype)
+            try {
+                double value = Double.parseDouble(input);
+
+                //age
+                if (type.equals("age")) {
+                    if (value < 0) {
+                        System.out.println("Fel: Ålder måste vara 0 eller högre.");
+                        continue;
+                    }
+                    return input;
+                }
+
+                //length
+                if (type.equals("length")) {
+                    if (value <= 0) {
+                        System.out.println("Fel: Längd måste vara större än 0!");
+                        continue;
+                    }
+                    return input;
+                }
+
+                // Horse type (1–3)
+                if (type.equals("horsetype")) {
+                    int intValue = (int) value;
+                    if (intValue >= 1 && intValue <= 3) {
+                        return input;
+                    }
+                    System.out.println("Fel! Välj mellan 1–3.");
+                    continue;
+                }
+
             } catch (NumberFormatException e) {
-                System.out.println("Försök med ett nummer i listan!");
+
+                if (type.equals("age"))
+                    System.out.println("Fel: Ålder måste vara ett heltal.");
+
+                else if (type.equals("length"))
+                    System.out.println("Fel: Längd måste vara ett decimaltal.");
+
+                else if (type.equals("horsetype"))
+                    System.out.println("Försök med ett nummer i listan!");
             }
         }
-        return typeChoiceInt;
-
-    }//validate type
-
-    public static int enterAndValidateAgeInput(Scanner scanner){
-
-        int ageInt = -1;
-        while (ageInt < 0) {
-            try {
-                System.out.print("Ålder: ");
-                ageInt = Integer.parseInt(scanner.nextLine());
-
-                if (ageInt < 0) {
-                    System.out.println("Fel: Ålder måste vara 0 eller högre.");
-                    ageInt = -1; // Reset to continue loop
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Fel: Ålder måste vara ett heltal.");
-                ageInt = -1; // Reset to continue loop
-            }
-        }
-        return ageInt;
-
-    }//validate age
-
-    public static double enterAndValidateLengthInput(Scanner scanner){
-
-        double lengthDouble = -1;
-        while (lengthDouble < 0) {
-            try {
-                System.out.print("Längd (meter): ");
-                lengthDouble = Double.parseDouble(scanner.nextLine());
-
-                if (lengthDouble <= 0.0) {
-                    System.out.println("Längd måste vara större än 0!");
-                    lengthDouble = -1; // Reset to continue loop
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Längd måste vara ett decimaltal!");
-                lengthDouble = -1; // Reset to continue loop
-            }
-        }
-        return lengthDouble;
-
-    }//validate length
-
-    public static String enterAndValidateName(Scanner scanner){
-
-        System.out.print("Namn: ");
-        String name = scanner.nextLine();
-        //Check name only contains letters and spaces, and is not empty
-        while (!name.matches("[A-Za-zÅÄÖåäö ]+") || name.trim().isEmpty()) {
-            System.out.println("Fel: Skriv in ett giltigt namn: ");
-            name = scanner.nextLine();
-        }
-        return name;
-
-    }//enterAndValidateName
+    }//enterAndValidateInput
 
     public static Horse findHorse (String name, ArrayList<Horse> horses) {
 

@@ -33,13 +33,13 @@ public class PrivateHorse extends Horse{
     @Override
     public String showDetails(){
 
-        return "\n/**********************************************/\n" +
-                "Namn: " + getName() + "\n" +
+        return  "Namn: " + getName() + "\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Privat häst\n" +
+                "Typ: " + getType() +"\n" +
                 "Ägare: " + getOwner() + "\n" +
-                "Kan kontaktas: " + (isContactable ? "Ja" : "Nej") + "\n" +
-                "/**********************************************/";
+                "Tillgänglig för bokning: Nej \n" +
+
+                "/**********************************************/\n";
     }
 
     @Override
@@ -53,9 +53,4 @@ public class PrivateHorse extends Horse{
                     " och kan inte bokas via systemet.";
     }
 
-    // Checks if the horse is available via owner contact
-    @Override
-    public boolean isAvailableFor(String requirement) {
-        return this.isContactable;
-    }
 }
