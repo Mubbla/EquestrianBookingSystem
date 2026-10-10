@@ -24,50 +24,42 @@ public class HorseManager {
         int menuChoice = 0;
         while (true) {
             System.out.println("\n=== ADMINISTRERA HÄSTAR ===");
-            System.out.println("1. Visa alla");
-            System.out.println("2. Lista alla bokningskrav");
-            System.out.println("3. Lägg till");
-            System.out.println("4. Ta bort");
-            System.out.println("5. Boka");
-            System.out.println("6. Avboka");
-            System.out.println("7. Avsluta");
-            System.out.print("Vad vill du göra? Mata in siffran: ");
-            try {
-                menuChoice = scanner.nextInt();
-                scanner.nextLine();// consume leftover newline from nextInt()
-            } catch (InputMismatchException e) {
-                System.out.println("Du måste skriva in siffran för alternativet!");
-                scanner.nextLine(); // delete the faulty value
-                menuChoice = 0; // keep the loop running
-            }
-            if (menuChoice != 0) {
-                switch (menuChoice) {
-                    case 1:
-                        listAllHorses(horses);
-                        break;
-                    case 2:
-                        listAllBookingRequirements(horses);
-                        break;
-                    case 3:
-                        addHorseFromUserInput(horses, scanner);
-                        break;
-                    case 4:
-                        deleteHorse(horses, scanner);
-                        break;
-                    case 5:
-                        bookHorse(scanner, horses, bookingEngine);
-                        break;
-                    case 6:
-                        cancelBooking(scanner, horses);
-                        break;
-                    case 7:
-                        //Quits program
-                        System.out.println("Programmet avslutas. Hejdå!");
-                        return; //Quits while
-                    default:
-                        System.out.println("Felaktigt värde!");
-                }
-            }//if
+            System.out.println("[1] Visa alla");
+            System.out.println("[2] Lista alla bokningskrav");
+            System.out.println("[3] Lägg till");
+            System.out.println("[4] Ta bort");
+            System.out.println("[5] Boka");
+            System.out.println("[6] Avboka");
+            System.out.println("[0] Avsluta programmet");
+            menuChoice = Integer.parseInt(enterAndValidateInput(scanner, "Välj alternativ: ", "menu"));
+                if (menuChoice >= 0) {
+                    switch (menuChoice) {
+                        case 1:
+                            listAllHorses(horses);
+                            break;
+                        case 2:
+                            listAllBookingRequirements(horses);
+                            break;
+                        case 3:
+                            addHorseFromUserInput(horses, scanner);
+                            break;
+                        case 4:
+                            deleteHorse(horses, scanner);
+                            break;
+                        case 5:
+                            bookHorse(scanner, horses, bookingEngine);
+                            break;
+                        case 6:
+                            cancelBooking(scanner, horses);
+                            break;
+                        default:
+                            if(menuChoice==0) {
+                                System.out.println("Programmet avslutas. Hejdå!");
+                                return; //Quits while
+                            }
+                            System.out.println("Felaktigt värde!");
+                    }
+                }//if
         }//while menuChoice
 
     }//main
@@ -288,6 +280,15 @@ public class HorseManager {
             System.out.print(prompt + " ");
             String input = scanner.nextLine().trim();
 
+            //menu
+            if (type.equals("menu")) {
+                if (!input.matches("[0-9]+")) {
+                    System.out.println("Fel: Försök med en siffra från menyn!");
+                    continue; // ask again
+                }
+                return input; // valid input
+            }
+
             // name
             if (type.equals("name")) {
                 if (input.matches("[A-Za-zÅÄÖåäö ]+") && !input.trim().isEmpty()) {
@@ -313,7 +314,7 @@ public class HorseManager {
                 //length
                 if (type.equals("length")) {
                     if (value <= 0) {
-                        System.out.println("Fel: Längd måste vara större än 0!");
+                        System.out.println("Fel: Längd ska vara större än 0!");
                         continue;
                     }
                     return input;
@@ -325,7 +326,7 @@ public class HorseManager {
                     if (intValue >= 1 && intValue <= 3) {
                         return input;
                     }
-                    System.out.println("Fel! Välj mellan 1–3.");
+                    System.out.println("Fel: Välj mellan 1–3.");
                     continue;
                 }
 
@@ -338,7 +339,7 @@ public class HorseManager {
                     System.out.println("Fel: Längd måste vara ett decimaltal.");
 
                 else if (type.equals("horsetype"))
-                    System.out.println("Försök med ett nummer i listan!");
+                    System.out.println("Fel: Försök med ett nummer i listan!");
             }
         }
     }//enterAndValidateInput
@@ -353,6 +354,10 @@ public class HorseManager {
         return null;
 
     }//findHorse
+
+    public static void printHeader(String title) {
+        System.out.println("== " + title + " ==");
+    }
 
 }//class
 
