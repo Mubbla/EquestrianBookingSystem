@@ -20,23 +20,40 @@ public class Pony extends Horse implements Bookable
     }
 
     @Override
-    public String showDetails(){
-
-        return  "Namn: " + getName() + "\n" +
+    public String showDetails() {
+        return  "=== " + getName() + " (Ponny) ===\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Typ: " + getType() +"\n" +
-                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
-
-                "/**********************************************/\n";
-
+                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n";
     }
+
+
+//    @Override
+//    public String showDetails(){
+//
+//        return  "Namn: " + getName() + "\n" +
+//                "Ålder: " + getAge() + "\n" +
+//                "Typ: " + getType() +"\n" +
+//                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+//
+//                "/**********************************************/\n";
+//
+//    }
 
     @Override
-    public String getBookingRequirement(){
-        return getName() + " är en " + getType() +
-                " och du måste vara minst " + getMinRiderLength() +
-                " m för att boka.";
+    public String getBookingRequirement() {
+        return  "=== " + getName() + " (Ponny) ===\n" +
+                "Krav: Minst " + getMinRiderLength() + " m för att boka.\n";
     }
+
+
+//    @Override
+//    public String getBookingRequirement(){
+//        return getName() + " är en " + getType() +
+//                " och du måste vara minst " + getMinRiderLength() +
+//                " m för att boka." + "\n" +
+//
+//        "/************************************************************************************/\n";
+//    }
 
     //Interface implementation of book and cancelBooking
     @Override

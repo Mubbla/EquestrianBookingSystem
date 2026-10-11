@@ -1,13 +1,13 @@
 public class PrivateHorse extends Horse{
     private String owner;
-    private boolean isContactable;
+    private boolean ownerContactable;
 
-    public PrivateHorse(String name, int age, String owner, boolean isContactable) {
+    public PrivateHorse(String name, int age, String owner, boolean ownerContactable) {
         // Call the superclass constructor to initialize shared Horse fields
         super(name, age, false);
         // Initialize subclass-specific field
         this.owner = owner;
-        this.isContactable = isContactable;
+        this.ownerContactable = ownerContactable;
     }
 
     //Getters
@@ -15,13 +15,8 @@ public class PrivateHorse extends Horse{
         return owner;
     }
 
-    public boolean isContactable() {
-        return isContactable;
-    }
-
-    //Setters
-    public void setContactable(boolean contactable) {
-        isContactable = contactable;
+    public boolean ownerContactable() {
+        return ownerContactable;
     }
 
     // Overrides the base class methods to display subclass-specific details
@@ -31,26 +26,25 @@ public class PrivateHorse extends Horse{
     }
 
     @Override
-    public String showDetails(){
+    public String showDetails() {
+        String availability = ownerContactable ? "Kontakta ägaren" : "Nej";
 
-        return  "Namn: " + getName() + "\n" +
+        return  "=== " + getName() + " (Privat häst) ===\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Typ: " + getType() +"\n" +
                 "Ägare: " + getOwner() + "\n" +
-                "Tillgänglig för bokning: Nej \n" +
-
-                "/**********************************************/\n";
+                "Tillgänglig för bokning: " + availability + "\n";
     }
 
     @Override
-    public String getBookingRequirement(){
-        if(this.isContactable)
-            return getName() + " är en " + getType() +
-                " och kan inte bokas via systemet. Kontakta " + getOwner() +
-                " för att boka.";
-        else
-            return getName() + " är en " + getType() +
-                    " och kan inte bokas via systemet.";
+    public String getBookingRequirement() {
+        if (ownerContactable) {
+            return  "=== " + getName() + " (Privat häst) ===\n" +
+                    "Kan inte bokas via systemet.\n" +
+                    "Kontakt: " + getOwner() + "\n";
+        } else {
+            return  "=== " + getName() + " (Privat häst) ===\n" +
+                    "Kan inte bokas via systemet.\n";
+        }
     }
 
 }
