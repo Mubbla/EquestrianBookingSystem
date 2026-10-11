@@ -21,23 +21,38 @@ public class FullSizeHorse extends Horse implements Bookable{
     public String getType(){
         return "stor häst";
     }
+
+//    @Override
+//    public String showDetails(){
+//
+//        return  "Namn: " + getName() +  "\n" +
+//                "Ålder: " + getAge() + "\n" +
+//                "Typ: " + getType() +"\n" +
+//                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
+//
+//                "/**********************************************/\n";
+//
+//    }
     @Override
-    public String showDetails(){
-
-        return  "Namn: " + getName() +  "\n" +
+    public String showDetails() {
+        return  "=== " + getName() + " (Stor häst) ===\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Typ: " + getType() +"\n" +
-                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
-
-                "/**********************************************/";
-
+                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n";
     }
 
+
+//    @Override
+//    public String getBookingRequirement(){
+//        return getName() + " är en " + getType() +
+//                " och du måste vara minst " + getMinRiderAge() +
+//                " år för att boka." + "\n" +
+//
+//                "/************************************************************************************/\n";
+//    }
     @Override
-    public String getBookingRequirement(){
-        return getName() + " är en " + getType() +
-                " och du måste vara minst " + getMinRiderAge() +
-                " år för att boka.";
+    public String getBookingRequirement() {
+        return  "=== " + getName() + " (Stor häst) ===\n" +
+                "Krav: Minst " + getMinRiderAge() + " år för att boka.\n";
     }
 
     //Interface implementation of book and cancelBooking
