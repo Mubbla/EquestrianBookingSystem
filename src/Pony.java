@@ -1,5 +1,5 @@
-public class Pony extends Horse implements Bookable
-{
+public class Pony extends Horse implements Bookable {
+
     private double minRiderLength;
 
     public Pony(String name, int age, double lengthLimit) {
@@ -8,74 +8,52 @@ public class Pony extends Horse implements Bookable
         // Initialize subclass-specific field
         this.minRiderLength = lengthLimit;
     }
-
+    //Getter
     public double getMinRiderLength() {
         return minRiderLength;
     }
 
     // Overrides the base class methods to display subclass-specific details
     @Override
-    public String getType(){
+    public String getType() {
         return "ponny";
     }
 
     @Override
     public String showDetails() {
-        return  "=== " + getName() + " (Ponny) ===\n" +
+        return "=== " + getName() + " (Ponny) ===\n" +
                 "Ålder: " + getAge() + "\n" +
                 "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n";
     }
 
-
-//    @Override
-//    public String showDetails(){
-//
-//        return  "Namn: " + getName() + "\n" +
-//                "Ålder: " + getAge() + "\n" +
-//                "Typ: " + getType() +"\n" +
-//                "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n" +
-//
-//                "/**********************************************/\n";
-//
-//    }
-
     @Override
     public String getBookingRequirement() {
-        return  "=== " + getName() + " (Ponny) ===\n" +
+        return "=== " + getName() + " (Ponny) ===\n" +
                 "Krav: Minst " + getMinRiderLength() + " m för att boka.\n";
     }
 
-
-//    @Override
-//    public String getBookingRequirement(){
-//        return getName() + " är en " + getType() +
-//                " och du måste vara minst " + getMinRiderLength() +
-//                " m för att boka." + "\n" +
-//
-//        "/************************************************************************************/\n";
-//    }
-
-    //Interface implementation of book and cancelBooking
+    // Interface implementation of book and cancelBooking
     @Override
-    public boolean book(String riderLength){
-
+    public boolean book(String riderLength) {
         double riderLengthDouble = Double.parseDouble(riderLength);
-        if(riderLengthDouble>=minRiderLength)
-            this.setAvailable(false); //If booking succeeded - pony no longer available
 
-        return riderLengthDouble>=minRiderLength; //true = booked, false = failed booking
+        boolean canBook = riderLengthDouble >= minRiderLength;
+        if (canBook) {
+            this.setAvailable(false); // If booking succeeded – pony no longer available
+        }
 
+        return canBook; // true = booked, false = failed booking
     }
-    @Override
-    public boolean cancelBooking(){
 
+    @Override
+    public boolean cancelBooking() {
         boolean canceled = false;
-        if(!this.isAvailable()) {
-            this.setAvailable(true); //If cancelling succeeded, horse is available
+
+        if (!this.isAvailable()) {
+            this.setAvailable(true); // If cancelling succeeded, horse is available
             canceled = true;
         }
 
-        return canceled; //true = canceled, false = failed cancelling (already available)
-
+        return canceled; // true = canceled, false = failed cancelling (already available)
     }
 }

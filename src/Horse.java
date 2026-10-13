@@ -1,20 +1,18 @@
-import java.util.ArrayList;
-
 public abstract class Horse {
 
-    //Common fields for all horses
+    // Common fields for all horses
     private String name;
     private int age;
     private boolean isAvailable;
 
-    //Constructor
+    // Constructor
     public Horse(String name, int age, boolean isAvailable) {
         this.name = name;
         this.age = age;
         this.isAvailable = isAvailable;
     }
 
-    //Getters
+    // Getters
     public String getName() {
         return name;
     }
@@ -27,7 +25,7 @@ public abstract class Horse {
         return isAvailable;
     }
 
-    //Setters
+    // Setters
     public void setAge(int age) {
         this.age = age;
     }
@@ -36,15 +34,10 @@ public abstract class Horse {
         isAvailable = available;
     }
 
-    // Base method intended to be overridden by all horse subclasses
+    // Base methods intended to be overridden by all horse subclasses
     public abstract String showDetails();
 
     public abstract String getType();
 
-    // Base method intended to be overridden by all horse subclasses
     public abstract String getBookingRequirement();
-
 }
-
-
-
