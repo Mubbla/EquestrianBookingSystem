@@ -1,23 +1,17 @@
 public class PrivateHorse extends Horse {
 
-    private String owner;
-    private boolean ownerContactable;
+    private Person owner;
 
-    public PrivateHorse(String name, int age, String owner, boolean ownerContactable) {
+    public PrivateHorse(String name, int age, Person owner) {
         // Call the superclass constructor to initialize shared Horse fields
         super(name, age, false);
         // Initialize subclass-specific fields
         this.owner = owner;
-        this.ownerContactable = ownerContactable;
     }
 
     // Getters
-    public String getOwner() {
+    public Person getOwner() {
         return owner;
-    }
-
-    public boolean ownerContactable() {
-        return ownerContactable;
     }
 
     // Overrides the base class methods to display subclass-specific details
@@ -28,20 +22,21 @@ public class PrivateHorse extends Horse {
 
     @Override
     public String showDetails() {
-        String availability = ownerContactable ? "Kontakta ägaren" : "Nej";
+        String availability = owner.isContactable() ? "Kontakta ägaren" : "Nej";
 
         return "=== " + getName() + " (Privat häst) ===\n" +
                 "Ålder: " + getAge() + "\n" +
-                "Ägare: " + getOwner() + "\n" +
+                "Ägare: " + owner.getName() + "\n" +
                 "Tillgänglig för bokning: " + availability + "\n";
     }
 
+
     @Override
     public String getBookingRequirement() {
-        if (ownerContactable) {
+        if (owner.isContactable()) {
             return "=== " + getName() + " (Privat häst) ===\n" +
                     "Kan inte bokas via systemet.\n" +
-                    "Kontakt: " + getOwner() + "\n";
+                    "Kontakt: " + getOwner().getName() + "\n";
         } else {
             return "=== " + getName() + " (Privat häst) ===\n" +
                     "Kan inte bokas via systemet.\n";

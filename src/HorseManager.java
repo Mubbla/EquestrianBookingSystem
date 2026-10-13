@@ -7,13 +7,16 @@ public class HorseManager {
         // Creates a bookingHandler for booking logic only
         BookingHandler bookingHandler = new BookingHandler();
 
+        // Creates owners
+        Person Nisse = new Person("Nisse", true);
+        Person Janne = new Person("Janne", false);
         // Creates horse data "database"
         Horse horse1 = new Pony("Diabolo", 14, 1.30);
         Horse horse2 = new FullSizeHorse("Blixten", 11, 18);
-        Horse horse3 = new PrivateHorse("Hoppla", 7, "Nisse", true);
-        Horse horse4 = new PrivateHorse("Wille", 3, "Janne", false);
+        Horse horse3 = new PrivateHorse("Hoppla", 7, Nisse);
+        Horse horse4 = new PrivateHorse("Wille", 3, Janne);
 
-        // Creates a predefined list of all horses available for booking
+                // Creates a predefined list of all horses available for booking
         ArrayList<Horse> horses = new ArrayList<>();
         horses.add(horse1);
         horses.add(horse2);
@@ -91,11 +94,15 @@ public class HorseManager {
             printHeader("Hästinfo");
             String horseName = enterAndValidateInput(scanner, "Namn:", "name");
             int age = Integer.parseInt(enterAndValidateInput(scanner, "Ålder:", "age"));
-            int typeChoiceInt = Integer.parseInt(
-                    enterAndValidateInput(scanner, "Typ (1=Stor häst, 2=Ponny, 3=Privat):", "horsetype")
-            );
+            printHeader("Hästtyp");
+            System.out.println("1. Stor häst");
+            System.out.println("2. Ponny");
+            System.out.println("3. Privat häst");
 
-            switch (typeChoiceInt) {
+            int typeChoice = Integer.parseInt
+                    (enterAndValidateInput(scanner, "Välj typ (1-3):", "horsetype"));
+
+            switch (typeChoice) {
                 case 1:
                     printHeader("Ryttarinfo");
                     int ageLimitInt = Integer.parseInt(
@@ -114,9 +121,9 @@ public class HorseManager {
 
                 case 3:
                     printHeader("Ägarinfo");
-                    String owner = enterAndValidateInput(scanner, "Ägarens namn:", "name");
-                    boolean contactable;
+                    String ownerName = enterAndValidateInput(scanner, "Ägarens namn:", "name");
 
+                    boolean contactable;
                     while (true) {
                         System.out.print("Kan ägaren kontaktas? (ja/nej): ");
                         String input = scanner.nextLine().trim().toLowerCase();
@@ -134,7 +141,11 @@ public class HorseManager {
                         System.out.println("Fel: Skriv 'ja' eller 'nej'.");
                     }
 
-                    horse = new PrivateHorse(horseName, age, owner, contactable);
+                    // Creates a Person object
+                    Person owner = new Person(ownerName, contactable);
+
+                    // Creates a PrivateHorse object with Person
+                    horse = new PrivateHorse(horseName, age, owner);
                     break;
             }
 
@@ -186,7 +197,6 @@ public class HorseManager {
         }
     }
 
-
     public static void bookHorse(Scanner scanner, ArrayList<Horse> horses, BookingHandler bookingHandler) {
 
         Horse horse;
@@ -194,8 +204,13 @@ public class HorseManager {
         boolean booked;
 
         while (true) {
+            printHeader("Hästtyp");
+            System.out.println("1. Stor häst");
+            System.out.println("2. Ponny");
+            System.out.println("3. Privat häst");
+
             int typeChoice = Integer.parseInt(
-                    enterAndValidateInput(scanner, "Typ (1=Stor häst, 2=Ponny, 3=Privat):", "horsetype")
+                    enterAndValidateInput(scanner, "Välj typ (1-3):", "horsetype")
             );
 
             switch (typeChoice) {
@@ -308,7 +323,7 @@ public class HorseManager {
                     else if (horse instanceof PrivateHorse) {
                         PrivateHorse p = (PrivateHorse) horse;
 
-                        if (p.ownerContactable()) {
+                        if (p.getOwner().isContactable()) {
                             System.out.println("Privatägd häst: Kontakta ägaren om du vill avboka!");
                         } else {
                             System.out.println("Privatägd häst kan inte avbokas via systemet.");
