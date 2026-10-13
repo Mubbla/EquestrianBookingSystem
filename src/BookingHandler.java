@@ -2,14 +2,13 @@ public class BookingHandler {
 
     public boolean tryBooking(Horse horse, String riderInput) {
 
-        if (horse instanceof FullSizeHorse) {
-            return ((FullSizeHorse) horse).book(riderInput);
+        // Uses polymorphism via the Bookable interface
+        if (horse instanceof Bookable) {
+            Bookable bookableHorse = (Bookable) horse;
+            return bookableHorse.book(riderInput);
         }
 
-        if (horse instanceof Pony) {
-            return ((Pony) horse).book(riderInput);
-        }
-
-        return false; // privat häst eller okänd typ
+        // PrivateHorse or unknown type – cannot be booked via system
+        return false;
     }
 }
