@@ -21,7 +21,7 @@ public class PrivateHorse extends Horse {
     }
 
     @Override
-    public String showDetails() {
+    public String getDetails() {
         String availability = owner.isContactable() ? "Kontakta ägaren" : "Nej";
 
         return "=== " + getName() + " (Privat häst) ===\n" +

@@ -125,7 +125,7 @@ public class ConsoleUI {
 
     private void printMainMenu() {
         System.out.println("\n=== ADMINISTRERA HÄSTAR ===");
-        System.out.println("[1] Visa alla");
+        System.out.println("[1] Lista alla");
         System.out.println("[2] Lista alla bokningskrav");
         System.out.println("[3] Lägg till");
         System.out.println("[4] Ta bort");
@@ -146,7 +146,7 @@ public class ConsoleUI {
     }
 
     private void printHorseDetails(Horse horse) {
-        System.out.println(horse.showDetails());
+        System.out.println(horse.getDetails());
     }
 
     private void printBookingRequirement(Horse horse) {
@@ -156,11 +156,6 @@ public class ConsoleUI {
     // ============================================================
     // ERROR PRINTING
     // ============================================================
-
-    private void printInvalidInput() {
-        printError("Ogiltig input.");
-    }
-
 
     private void printError(String message) {
         System.out.println("Fel: " + message);
