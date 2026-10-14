@@ -135,5 +135,13 @@ horses can be booked. Responsibilities are separated so that
 - BookingHandler manages horse storage and booking logic
 - horse classes contain domain rules
 
+The Person class is included to represent the owner of a PrivateHorse, making 
+the domain model more realistic and allowing ownership details to be handled 
+cleanly within the object structure.
+
+This design also ensures that new horse types, booking rules, or menu
+actions can be added without modifying existing classes, which makes
+the system easy to maintain and extend over time.
+
 As the project evolves, this section will be updated
 to explain design decisions and alternatives considered.

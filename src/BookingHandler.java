@@ -7,13 +7,13 @@ public class BookingHandler {
     private ArrayList<Horse> horses = new ArrayList<>();
 
     public BookingHandler() {
-        Person nisse = new Person("Nisse", true);
-        Person janne = new Person("Janne", false);
+        Person person1 = new Person("Nisse", true);
+        Person person2 = new Person("Janne", false);
 
         horses.add(new Pony("Diabolo", 14, 1.30));
         horses.add(new FullSizeHorse("Blixten", 11, 18));
-        horses.add(new PrivateHorse("Hoppla", 7, nisse));
-        horses.add(new PrivateHorse("Wille", 3, janne));
+        horses.add(new PrivateHorse("Hoppla", 7, person1));
+        horses.add(new PrivateHorse("Wille", 3, person2));
     }
 
     public ArrayList<Horse> getHorses() {
