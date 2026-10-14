@@ -20,7 +20,7 @@ public class Pony extends Horse implements Bookable {
     }
 
     @Override
-    public String showDetails() {
+    public String getDetails() {
         return "=== " + getName() + " (Ponny) ===\n" +
                 "Ålder: " + getAge() + "\n" +
                 "Tillgänglig för bokning: " + (isAvailable() ? "Ja" : "Nej") + "\n";

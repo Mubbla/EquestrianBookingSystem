@@ -35,7 +35,7 @@ public abstract class Horse {
     }
 
     // Base methods intended to be overridden by all horse subclasses
-    public abstract String showDetails();
+    public abstract String getDetails();
 
     public abstract String getType();
 
