@@ -63,17 +63,23 @@ public class ConsoleUI {
     // ============================================================
 
     public String enterAndValidateInput(String prompt, String type) {
-
+        String errorMessage;
         while (true) {
             System.out.print(prompt + " ");
             String input = scanner.nextLine().trim();
 
             if (type.equals("menu")) {
-                if (!input.matches("[0-9]+")) {
+                try {
+                    int value = Integer.parseInt(input);
+                    if (value < 0 || value > 6) {
+                        printError("Försök med en siffra från menyn!");
+                        continue;
+                    }
+                    return input; //valid input
+                } catch (NumberFormatException e) {
                     printError("Försök med en siffra från menyn!");
                     continue;
                 }
-                return input;
             }
 
             if (type.equals("name")) {
@@ -85,6 +91,8 @@ public class ConsoleUI {
             }
 
             try {
+                // Parse as double to handle all numeric input in one try/catch,
+                // then apply type-specific validation rules.
                 double value = Double.parseDouble(input);
 
                 if (type.equals("age")) {
@@ -94,7 +102,6 @@ public class ConsoleUI {
                     }
                     return input;
                 }
-
                 if (type.equals("length")) {
                     if (value <= 0) {
                         printError("Orimlig längd.");
@@ -102,7 +109,6 @@ public class ConsoleUI {
                     }
                     return input;
                 }
-
                 if (type.equals("horsetype")) {
                     int intValue = (int) value;
                     if (intValue >= 1 && intValue <= 3) {
@@ -110,7 +116,6 @@ public class ConsoleUI {
                     }
                     printError("Försök med ett nummer på listan.");
                 }
-
             } catch (NumberFormatException e) {
                 if (type.equals("age")) printError("Ålder måste vara ett heltal.");
                 else if (type.equals("length")) printError("Längd måste vara ett decimaltal.");
