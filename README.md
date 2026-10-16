@@ -90,6 +90,9 @@ The interactive menu allows the user to manage the horse collection and booking 
 0. End program
 
 The menu runs in a loop and cannot crash due to invalid input.
+The system relies entirely on Java’s standard libraries.
+User input is handled through java.util.Scanner, and the horse 
+collection is stored in an ArrayList from java.util.
 
 ## Possible Error Cases
 Concrete examples from this project:
